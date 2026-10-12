@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>新词雷达历史报告</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    h1 { color: #333; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 8px 0; }
+    a { color: #0066cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    #content { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>新词雷达 · 历史报告</h1>
+  <ul id="list">加载中...</ul>
+  <div id="content"></div>
+
+  <script>
+    async function loadList() {
+      // 这里列出 reports 文件夹里的文件（需要手动维护，或后续用 GitHub API）
+      // 目前先写死几个示例，实际使用时你可以把新报告文件名加进来
+      const reports = [
+        "2026-10-12.md"
+        // 以后新增报告时，在这里加一行，例如：
+        // "2026-10-13.md",
+        // "2026-10-14.md"
+      ];
+
+      const list = document.getElementById("list");
+      list.innerHTML = "";
+
+      if (reports.length === 0) {
+        list.innerHTML = "<li>暂无报告</li>";
+        return;
+      }
+
+      reports.forEach(file => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = "#";
+        a.textContent = file.replace(".md", "");
+        a.onclick = (e) => {
+          e.preventDefault();
+          loadReport(file);
+        };
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+
+    async function loadReport(filename) {
+      const res = await fetch(`reports/${filename}`);
+      if (!res.ok) {
+        document.getElementById("content").innerHTML = "<p>加载失败</p>";
+        return;
+      }
+      const md = await res.text();
+      document.getElementById("content").innerHTML = marked.parse(md);
+    }
+
+    loadList();
+  </script>
+</body>
+</html>
