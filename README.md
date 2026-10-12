@@ -1,4 +1,5 @@
 # new-term-radar
+<<<<<<< HEAD
 
 [中文说明](README.zh-CN.md)
 
@@ -226,3 +227,6 @@ The tests cover the logic (name extraction, scoring, the store, the reports) and
 ## License
 
 MIT. Extracted from the radar that runs daily behind [agentskillshub.top](https://agentskillshub.top).
+=======
+AI 新词雷达历史报告
+>>>>>>> 03e8155a5c6db34657f26f0498a392b5c3b90d50
